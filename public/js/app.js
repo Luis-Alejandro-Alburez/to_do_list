@@ -1,3 +1,5 @@
+console.log("📦 app.js está cargado");
+
 import TaskForm from "./taskForm.js";
 import DropdownMenu from "./dropdownMenu.js";
 

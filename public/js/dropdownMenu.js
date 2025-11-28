@@ -1,16 +1,24 @@
-// public/js/dropdownMenu.js
+// public/js/dropdownMenu.js - VERSIÓN CORREGIDA
 class DropdownMenu {
   constructor() {
+    console.log("🔧 DropdownMenu constructor ejecutado");
+
     this.dropdown = document.querySelector(".dropdown");
     this.dropdownContent = document.querySelector(".dropdown-content");
     this.timeoutId = null;
     this.isMenuOpen = false;
+
+    console.log("🔍 Elementos encontrados:", {
+      dropdown: this.dropdown,
+      dropdownContent: this.dropdownContent,
+    });
+
     this.init();
   }
 
   init() {
     if (!this.dropdown || !this.dropdownContent) {
-      console.warn("Elementos del menú no encontrados");
+      console.warn("❌ Elementos del menú no encontrados");
       return;
     }
 
@@ -23,11 +31,13 @@ class DropdownMenu {
   bindEvents() {
     // Mostrar menú al hacer hover en el botón
     this.dropdown.addEventListener("mouseenter", () => {
+      console.log("🐭 Mouse entró al dropdown");
       this.showMenu();
     });
 
     // Ocultar menú con retraso al salir del botón
     this.dropdown.addEventListener("mouseleave", (e) => {
+      console.log("🐭 Mouse salió del dropdown");
       // Verificar si el mouse fue al contenido del menú
       if (!e.relatedTarget || !this.dropdownContent.contains(e.relatedTarget)) {
         this.hideMenuWithDelay();
@@ -36,24 +46,16 @@ class DropdownMenu {
 
     // Mantener menú visible cuando el mouse está en el contenido
     this.dropdownContent.addEventListener("mouseenter", () => {
+      console.log("🐭 Mouse entró al contenido del menú");
       this.cancelHide();
     });
 
     // Ocultar menú con retraso al salir del contenido
     this.dropdownContent.addEventListener("mouseleave", (e) => {
+      console.log("🐭 Mouse salió del contenido del menú");
       // Verificar si el mouse fue al botón del menú
       if (!e.relatedTarget || !this.dropdown.contains(e.relatedTarget)) {
         this.hideMenuWithDelay();
-      }
-    });
-
-    // Cerrar menú al hacer click fuera
-    document.addEventListener("click", (e) => {
-      if (
-        !this.dropdown.contains(e.target) &&
-        !this.dropdownContent.contains(e.target)
-      ) {
-        this.hideMenu();
       }
     });
   }
@@ -72,12 +74,14 @@ class DropdownMenu {
   }
 
   hideMenuWithDelay() {
+    console.log("⏰ Programando ocultamiento del menú");
     this.timeoutId = setTimeout(() => {
       this.hideMenu();
-    }, 300); // 300ms de retraso
+    }, 500); // 500ms de retraso
   }
 
   hideMenu() {
+    console.log("👋 Ocultando menú");
     this.isMenuOpen = false;
     this.dropdownContent.style.opacity = "0";
     this.dropdownContent.style.transform = "translateY(-10px)";
@@ -93,6 +97,7 @@ class DropdownMenu {
 
   cancelHide() {
     if (this.timeoutId) {
+      console.log("❌ Cancelando ocultamiento programado");
       clearTimeout(this.timeoutId);
       this.timeoutId = null;
     }

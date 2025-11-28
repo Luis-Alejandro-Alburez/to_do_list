@@ -1,9 +1,17 @@
+// public/js/taskForm.js - VERSIÓN CORREGIDA
 class TaskForm {
   constructor() {
     this.toggleBtn = document.getElementById("toggle-form-btn");
     this.headerToggleBtn = document.getElementById("header-add-btn");
     this.taskForm = document.getElementById("add-task-form");
     this.cancelBtn = document.getElementById("cancel-btn");
+
+    console.log("🔍 Elementos encontrados:", {
+      toggleBtn: this.toggleBtn,
+      headerToggleBtn: this.headerToggleBtn,
+      taskForm: this.taskForm,
+      cancelBtn: this.cancelBtn,
+    });
 
     this.init();
   }
@@ -20,39 +28,70 @@ class TaskForm {
   bindEvents() {
     // Botón original (footer)
     if (this.toggleBtn) {
-      this.toggleBtn.addEventListener("click", () => this.showForm());
+      this.toggleBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("🖱️ Botón footer clickeado");
+        this.showForm();
+      });
+    } else {
+      console.warn("❌ Botón footer no encontrado");
     }
 
-    // Botón del header
+    // Botón del header (en el menú desplegable)
     if (this.headerToggleBtn) {
-      this.headerToggleBtn.addEventListener("click", () => this.showForm());
+      this.headerToggleBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("🖱️ Botón header clickeado");
+        this.showForm();
+      });
+    } else {
+      console.warn("❌ Botón header no encontrado");
     }
 
     // Cancelar
     if (this.cancelBtn) {
-      this.cancelBtn.addEventListener("click", () => this.hideForm());
+      this.cancelBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("❌ Botón cancelar clickeado");
+        this.hideForm();
+      });
+    } else {
+      console.warn("❌ Botón cancelar no encontrado");
     }
 
-    // Submit
-    this.taskForm.addEventListener("submit", () => this.handleSubmit());
+    // Submit del formulario
+    this.taskForm.addEventListener("submit", (e) => {
+      console.log("📤 Formulario enviado");
+      this.handleSubmit();
+    });
   }
 
   showForm() {
+    console.log("📝 Mostrando formulario");
     this.taskForm.classList.remove("hidden");
-    // Ocultar ambos botones de agregar
-    if (this.toggleBtn) this.toggleBtn.classList.add("hidden");
-    if (this.headerToggleBtn) this.headerToggleBtn.style.opacity = "0.5";
+
+    // Ocultar botón del footer
+    if (this.toggleBtn) {
+      this.toggleBtn.classList.add("hidden");
+    }
+
+    // El botón del header se oculta automáticamente porque el menú se cierra
   }
 
   hideForm() {
+    console.log("👋 Ocultando formulario");
     this.taskForm.classList.add("hidden");
-    // Mostrar ambos botones de agregar
-    if (this.toggleBtn) this.toggleBtn.classList.remove("hidden");
-    if (this.headerToggleBtn) this.headerToggleBtn.style.opacity = "1";
+
+    // Mostrar botón del footer
+    if (this.toggleBtn) {
+      this.toggleBtn.classList.remove("hidden");
+    }
+
     this.taskForm.reset();
   }
 
   handleSubmit() {
+    console.log("✅ Manejando envío del formulario");
     setTimeout(() => {
       this.hideForm();
     }, 100);
@@ -60,74 +99,3 @@ class TaskForm {
 }
 
 export default TaskForm;
-
-class DropdownMenu {
-    constructor() {
-        this.dropdown = document.querySelector('.dropdown');
-        this.dropdownContent = document.querySelector('.dropdown-content');
-        this.timeoutId = null;
-        this.init();
-    }
-    
-    init() {
-        if (!this.dropdown) return;
-        
-        this.bindEvents();
-    }
-    
-    bindEvents() {
-        // Mostrar menú al hacer hover
-        this.dropdown.addEventListener('mouseenter', () => {
-            this.showMenu();
-        });
-        
-        // Ocultar menú al salir, con retraso
-        this.dropdown.addEventListener('mouseleave', () => {
-            this.hideMenuWithDelay();
-        });
-        
-        // Mantener menú visible si el mouse está sobre el contenido
-        this.dropdownContent.addEventListener('mouseenter', () => {
-            this.cancelHide();
-        });
-        
-        this.dropdownContent.addEventListener('mouseleave', () => {
-            this.hideMenuWithDelay();
-        });
-    }
-    
-    showMenu() {
-        this.cancelHide(); // Cancelar cualquier ocultamiento pendiente
-        this.dropdownContent.style.display = 'block';
-        this.dropdownContent.style.opacity = '1';
-        this.dropdownContent.style.transform = 'translateY(0)';
-        this.dropdownContent.style.pointerEvents = 'all';
-    }
-    
-    hideMenuWithDelay() {
-        // Esperar 500ms antes de ocultar
-        this.timeoutId = setTimeout(() => {
-            this.hideMenu();
-        }, 500);
-    }
-    
-    hideMenu() {
-        this.dropdownContent.style.opacity = '0';
-        this.dropdownContent.style.transform = 'translateY(-10px)';
-        this.dropdownContent.style.pointerEvents = 'none';
-        
-        // Ocultar completamente después de la animación
-        setTimeout(() => {
-            this.dropdownContent.style.display = 'none';
-        }, 300);
-    }
-    
-    cancelHide() {
-        if (this.timeoutId) {
-            clearTimeout(this.timeoutId);
-            this.timeoutId = null;
-        }
-    }
-}
-
-export default DropdownMenu;
