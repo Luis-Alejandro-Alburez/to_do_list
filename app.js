@@ -71,6 +71,32 @@ app.post("/tasks", async (req, res) => {
   }
 });
 
+// Ruta para ACTUALIZAR tarea - POST
+app.post("/tasks/:id/update", async (req, res) => {
+  const taskId = req.params.id;
+  const { updatedTask } = req.body;
+
+  console.log(`🔄 Intentando actualizar tarea ${taskId}:`, updatedTask);
+
+  if (!updatedTask || updatedTask.trim() === "") {
+    console.log("❌ Intento de actualizar con tarea vacía");
+    return res.redirect("/");
+  }
+
+  try {
+    const result = await pool.query("UPDATE list SET item = $1 WHERE id = $2", [
+      updatedTask.trim(),
+      taskId,
+    ]);
+    console.log(`✅ Tarea ${taskId} actualizada: "${updatedTask}"`);
+    console.log(`📊 Filas afectadas:`, result.rowCount);
+    res.redirect("/");
+  } catch (error) {
+    console.error("❌ Error al actualizar tarea:", error);
+    res.redirect("/");
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`servidor corriendo en http://localhost: ${PORT}`);

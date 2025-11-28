@@ -529,3 +529,206 @@ footer {
     text-align: center;
   }
 }
+
+/* ===== ESTILOS PARA EDICIÓN DE TAREAS ===== */
+.task-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.task-view:hover {
+  opacity: 0.8;
+}
+
+.edit-form {
+  width: 100%;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #8b7355;
+  margin-top: 0.5rem;
+}
+
+.edit-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.edit-task-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  color: #5d4037;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.edit-task-input:focus {
+  outline: none;
+  border-color: #8b7355;
+  box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.update-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.update-btn:hover {
+  background: #45a049;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.cancel-edit-btn {
+  background: #9e9e9e;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.cancel-edit-btn:hover {
+  background: #757575;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(158, 158, 158, 0.3);
+}
+
+/* Estado de edición activa */
+.task-item.editing .task-view {
+  display: none;
+}
+
+.task-item.editing .edit-form {
+  display: block;
+}
+
+/* ===== ESTILOS PARA EDICIÓN DE TAREAS ===== */
+.task-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.task-view:hover {
+  opacity: 0.8;
+}
+
+.edit-form {
+  width: 100%;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #8b7355;
+  margin-top: 0.5rem;
+}
+
+.edit-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.edit-task-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  color: #5d4037;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.edit-task-input:focus {
+  outline: none;
+  border-color: #8b7355;
+  box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.update-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.update-btn:hover {
+  background: #45a049;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.cancel-edit-btn {
+  background: #9e9e9e;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.cancel-edit-btn:hover {
+  background: #757575;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(158, 158, 158, 0.3);
+}
+
+/* Estado de edición activa - ESTO ES CRÍTICO */
+.task-item.editing .task-view {
+  display: none !important;
+}
+
+.task-item.editing .edit-form {
+  display: block !important;
+}
+
+/* Asegurar que el formulario de edición esté oculto inicialmente */
+.edit-form {
+  display: none;
+}

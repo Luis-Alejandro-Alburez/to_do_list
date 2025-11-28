@@ -26,15 +26,46 @@
           <ul class="tasks-list">
             <% tasks.forEach(function(task) { %>
             <li class="task-item">
-              <span class="task-text"><%= task.item %></span>
-              <div class="task-actions">
-                <!-- Form para borrar -->
+              <!-- Vista normal -->
+              <div class="task-view">
+                <span class="task-text" data-task-id="<%= task.id %>">
+                  <%= task.item %>
+                </span>
+                <div class="task-actions">
+                  <form
+                    action="/tasks/<%= task.id %>/delete"
+                    method="POST"
+                    class="delete-form"
+                  >
+                    <button type="submit" class="delete-btn">🗑️ Borrar</button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Formulario de edición (oculto inicialmente) -->
+              <div class="edit-form hidden" data-task-id="<%= task.id %>">
                 <form
-                  action="/tasks/<%= task.id %>/delete"
+                  action="/tasks/<%= task.id %>/update"
                   method="POST"
-                  class="delete-form"
+                  class="edit-task-form"
                 >
-                  <button type="submit" class="delete-btn">🗑️ Borrar</button>
+                  <div class="edit-input-group">
+                    <input
+                      type="text"
+                      name="updatedTask"
+                      value="<%= task.item %>"
+                      class="edit-task-input"
+                      required
+                    />
+                    <div class="edit-actions">
+                      <button type="submit" class="update-btn">
+                        ✅ Actualizar
+                      </button>
+                      <button type="button" class="cancel-edit-btn">
+                        ❌ Cancelar
+                      </button>
+                    </div>
+                  </div>
                 </form>
               </div>
             </li>

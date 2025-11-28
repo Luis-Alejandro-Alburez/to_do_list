@@ -1,4 +1,4 @@
-// public/js/taskForm.js - VERSIÓN CORREGIDA
+// public/js/taskForm.js - VERSIÓN CON EDICIÓN
 class TaskForm {
   constructor() {
     this.toggleBtn = document.getElementById("toggle-form-btn");
@@ -23,6 +23,7 @@ class TaskForm {
     }
 
     this.bindEvents();
+    this.bindEditEvents(); // Nueva función para edición
   }
 
   bindEvents() {
@@ -66,8 +67,84 @@ class TaskForm {
     });
   }
 
+  // NUEVA FUNCIÓN: Manejar eventos de edición
+  bindEditEvents() {
+    console.log("🔧 Configurando eventos de edición...");
+
+    // Hacer clic en el texto de la tarea para editar
+    document.querySelectorAll(".task-text").forEach((taskText) => {
+      taskText.addEventListener("click", (e) => {
+        console.log("📝 Click en texto de tarea");
+        this.showEditForm(e.target);
+      });
+    });
+
+    // Cancelar edición
+    document.querySelectorAll(".cancel-edit-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("❌ Cancelando edición");
+        this.hideEditForm(e.target);
+      });
+    });
+
+    console.log(
+      `✅ Eventos de edición configurados: ${
+        document.querySelectorAll(".task-text").length
+      } tareas encontradas`
+    );
+  }
+
+  // NUEVA FUNCIÓN: Mostrar formulario de edición
+  showEditForm(taskTextElement) {
+    const taskItem = taskTextElement.closest(".task-item");
+    const taskId = taskTextElement.getAttribute("data-task-id");
+
+    console.log(`✏️ Editando tarea ID: ${taskId}`);
+
+    if (!taskItem) {
+      console.error("❌ No se pudo encontrar el elemento de la tarea");
+      return;
+    }
+
+    // Ocultar vista normal, mostrar formulario de edición
+    taskItem.classList.add("editing");
+
+    // Enfocar el input de edición
+    const editInput = taskItem.querySelector(".edit-task-input");
+    if (editInput) {
+      editInput.focus();
+      editInput.select();
+      console.log("🎯 Input de edición enfocado");
+    } else {
+      console.error("❌ No se pudo encontrar el input de edición");
+    }
+  }
+
+  // NUEVA FUNCIÓN: Ocultar formulario de edición
+  hideEditForm(cancelButton) {
+    const editForm = cancelButton.closest(".edit-form");
+    const taskItem = editForm.closest(".task-item");
+
+    if (!taskItem) {
+      console.error("❌ No se pudo encontrar el elemento de la tarea");
+      return;
+    }
+
+    console.log("👋 Ocultando formulario de edición");
+
+    // Ocultar formulario de edición, mostrar vista normal
+    taskItem.classList.remove("editing");
+
+    // Resetear el formulario
+    const form = taskItem.querySelector(".edit-task-form");
+    if (form) {
+      form.reset();
+    }
+  }
+
   showForm() {
-    console.log("📝 Mostrando formulario");
+    console.log("📝 Mostrando formulario de agregar");
     this.taskForm.classList.remove("hidden");
 
     // Ocultar botón del footer
@@ -79,7 +156,7 @@ class TaskForm {
   }
 
   hideForm() {
-    console.log("👋 Ocultando formulario");
+    console.log("👋 Ocultando formulario de agregar");
     this.taskForm.classList.add("hidden");
 
     // Mostrar botón del footer
@@ -91,7 +168,7 @@ class TaskForm {
   }
 
   handleSubmit() {
-    console.log("✅ Manejando envío del formulario");
+    console.log("✅ Manejando envío del formulario de agregar");
     setTimeout(() => {
       this.hideForm();
     }, 100);
